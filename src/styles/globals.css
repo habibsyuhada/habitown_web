@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.scrollable-container {  
+  padding-right: 10px; /* Memberikan ruang untuk scrollbar */  
+}  
+
+::-webkit-scrollbar {  
+  width: 6px; /* Lebar scrollbar */  
+}  
+
+::-webkit-scrollbar-track {  
+  background: #f1f1f1; /* Warna track */  
+  border-radius: 5px;  
+}  
+
+::-webkit-scrollbar-thumb {  
+  background: rgba(136, 136, 136, 0.5); /* Warna thumb awal (pudar) */  
+  border-radius: 5px;  
+  transition: background-color 2s ease; /* Animasi perubahan */  
+}  
+
+::-webkit-scrollbar-thumb:hover {  
+  background: #555; /* Warna thumb saat dihover (lebih terang) */  
+}  
