@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String?
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  User              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model User {
+  id            String    @id
+  name          String?
+  email         String    @unique
+  password      String?
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime
+  Account       Account[]
+  habits        Habit[]
+}
+
+model Habit {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  records     HabitRecord[]
+}
+
+model HabitRecord {
+  id        Int      @id @default(autoincrement())
+  date      DateTime @unique
+  completed Boolean   @default(false)
+  habitId   Int
+  habit     Habit     @relation(fields: [habitId], references: [id])
+}
+
+model currency {
+  base_code        String    @id @db.VarChar
+  conversion_rates String?
+  update_date      DateTime? @db.Timestamp(6)
+}
+
+model master_currency {
+  code String  @id @db.VarChar
+  name String? @db.VarChar
+}

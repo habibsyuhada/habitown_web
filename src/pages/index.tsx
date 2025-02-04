@@ -1,14 +1,29 @@
 import { Container, SimpleGrid, Box, GridItem, ProgressCircle, AbsoluteCenter, Text, VStack, HStack } from "@chakra-ui/react";
-import { RadioCardRoot, RadioCardItem } from "@/components/ui/radio-card";
-import { RiAppleFill, RiBankCardFill, RiPaypalFill } from "react-icons/ri"
 import HabitCalendar from "../components/simple-calendar";
+import CardHabit from "../components/card-habit";
+import AddHabitButton from "../components/add-habit-button";
+import { useEffect, useState } from "react";
+
+interface Habit {
+  id: number;
+  name: string;
+  description: string | null;
+}
+
 
 export default function Home() {
-  const items = [
-    { value: "paypal", title: "Paypal", description: "Best App Payment111111111 11111111111111111 111111111111111111111 11111111 1111111111", icon: <RiPaypalFill /> },
-    { value: "apple-pay", title: "Apple Pay", description: "Best App Payment", icon: <RiAppleFill /> },
-    { value: "card", title: "Card", description: "Best App Payment", icon: <RiBankCardFill /> },
-  ]
+  const [habits, setHabits] = useState<Habit[]>([]);
+
+  const fetchHabits = async () => {
+    const response = await fetch('/api/habit');
+    const data = await response.json();
+    setHabits(data);
+  };
+  
+  useEffect(() => {
+
+    fetchHabits();
+  }, []);
 
   const habitData = {
     '2025-02-01': true,
@@ -21,45 +36,21 @@ export default function Home() {
   return (
     <Container fluid py={4}>
       <SimpleGrid columns={{ base: 1, md: 4, xl: 6 }} gap={4}>
-        <GridItem colSpan={{ base: 1, md: 4, xl: 6 }}>
-          <Box
-            p="4"
-            borderWidth="1px"
-            borderColor="border.disabled"
-            color="fg.disabled"
-            borderRadius="md"
-            // height="96vh"
-            overflow={{ base: "auto" }}
-          >
-
-          </Box>
-        </GridItem>
         <GridItem colSpan={{ base: 1, md: 1, xl: 1 }}>
+          <AddHabitButton onHabitAdded={fetchHabits}/>
           <Box
-            p="4"
-            borderWidth="1px"
+            py="4"
             borderColor="border.disabled"
-            color="fg.disabled"
             borderRadius="md"
-            // height="96vh"
-            overflow={{ base: "auto" }}
+            maxH="90vh"
+            overflowX={{ base: "show" }}
           >
-            <RadioCardRoot
-              orientation="vertical"
-              defaultValue="paypal"
-            >
-              <VStack align="stretch">
-                {items.map((item) => (
-                  <RadioCardItem
-                    label={item.title}
-                    description={item.description}
-                    indicator={false}
-                    key={item.value}
-                    value={item.value}
-                  />
-                ))}
-              </VStack>
-            </RadioCardRoot>
+            <Text fontSize="sm" fontWeight="medium">
+              Have you done your habits today?
+            </Text>
+            {habits.map((habit) => (
+              <CardHabit key={habit.id} habit={habit} />
+            ))}
           </Box>
         </GridItem>
         <GridItem colSpan={{ base: 1, md: 3, xl: 5 }}>

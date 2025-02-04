@@ -1,0 +1,169 @@
+// import { Container, SimpleGrid, Box, GridItem, ProgressCircle, AbsoluteCenter, Text, VStack, HStack, Button, Input, FormControl, FormLabel } from "@chakra-ui/react";
+// import { RadioCardRoot, RadioCardItem } from "@/components/ui/radio-card";
+// import HabitCalendar from "../components/simple-calendar";
+// import { useEffect, useState } from "react";
+
+// interface Habit {
+//   id: number;
+//   name: string;
+//   description: string | null;
+// }
+
+// export default function Home() {
+//   const [habits, setHabits] = useState<Habit[]>([]);
+//   const [newHabitName, setNewHabitName] = useState("");
+//   const [newHabitDescription, setNewHabitDescription] = useState("");
+
+//   useEffect(() => {
+//     const fetchHabits = async () => {
+//       const response = await fetch('/api/habit');
+//       const data = await response.json();
+//       setHabits(data);
+//     };
+
+//     fetchHabits();
+//   }, []);
+
+//   const handleAddHabit = async () => {
+//     const response = await fetch('/api/habit', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({
+//         name: newHabitName,
+//         description: newHabitDescription,
+//         userId: "1", // Replace with the actual user ID if needed
+//       }),
+//     });
+
+//     if (response.ok) {
+//       const newHabit = await response.json();
+//       setHabits((prev) => [...prev, newHabit]);
+//       setNewHabitName("");
+//       setNewHabitDescription("");
+//     }
+//   };
+
+//   const habitData = {
+//     '2025-02-01': true,
+//     '2025-02-02': false,
+//     '2025-02-03': true,
+//     '2025-02-04': false,
+//     // Tambahkan data lainnya sesuai kebutuhan  
+//   };
+
+//   return (
+//     <Container fluid py={4}>
+//       <SimpleGrid columns={{ base: 1, md: 4, xl: 6 }} gap={4}>
+//         <GridItem colSpan={{ base: 1, md: 4, xl: 6 }}>
+//           <Box
+//             p="4"
+//             borderWidth="1px"
+//             borderColor="border.disabled"
+//             color="fg.disabled"
+//             borderRadius="md"
+//             overflow={{ base: "auto" }}
+//           >
+//             <FormControl>
+//               <FormLabel>Add New Habit</FormLabel>
+//               <Input
+//                 placeholder="Habit Name"
+//                 value={newHabitName}
+//                 onChange={(e) => setNewHabitName(e.target.value)}
+//               />
+//               <Input
+//                 placeholder="Description"
+//                 value={newHabitDescription}
+//                 onChange={(e) => setNewHabitDescription(e.target.value)}
+//                 mt={2}
+//               />
+//               <Button mt={4} onClick={handleAddHabit}>Add Habit</Button>
+//             </FormControl>
+//             <RadioCardRoot
+//               orientation="vertical"
+//               defaultValue="paypal"
+//             >
+//               <VStack align="stretch">
+//                 {habits.map((habit) => (
+//                   <RadioCardItem
+//                     label={habit.name}
+//                     description={habit.description}
+//                     indicator={false}
+//                     key={habit.id}
+//                     value={habit.id.toString()}
+//                   />
+//                 ))}
+//               </VStack>
+//             </RadioCardRoot>
+//           </Box>
+//         </GridItem>
+//         <GridItem colSpan={{ base: 1, md: 1, xl: 1 }}>
+//           <Box
+//             p="4"
+//             borderWidth="1px"
+//             borderColor="border.disabled"
+//             color="fg.disabled"
+//             borderRadius="md"
+//             overflow={{ base: "auto" }}
+//           >
+//             <HabitCalendar year={2025} month={1} habitData={habitData} />
+//           </Box>
+//         </GridItem>
+//         <GridItem colSpan={{ base: 1, md: 3, xl: 5 }}>
+//           <Box
+//             p="4"
+//             borderWidth="1px"
+//             borderColor="border.disabled"
+//             color="fg.disabled"
+//             borderRadius="md"
+//             overflow={{ base: "auto" }}
+//           >
+//             <SimpleGrid columns={{ base: 1, md: 2, xl: 3 }} gap={4}>
+//               <GridItem colSpan={{ base: 1, md: 1 }}>
+//                 <HStack align="stretch">
+//                   <VStack align="stretch">
+//                     <Text>Overview</Text>
+//                     <ProgressCircle.Root size={"xl"} key={"xl"} value={35} colorPalette={"green"}>
+//                       <ProgressCircle.Circle>
+//                         <ProgressCircle.Track />
+//                         <ProgressCircle.Range strokeLinecap="round" />
+//                       </ProgressCircle.Circle>
+//                       <AbsoluteCenter>
+//                         <ProgressCircle.ValueText />
+//                       </AbsoluteCenter>
+//                     </ProgressCircle.Root>
+//                   </VStack>
+//                   <VStack align="stretch">
+//                     <Text>Month</Text>
+//                     <ProgressCircle.Root size={"xl"} key={"xl"} value={35} colorPalette={"green"}>
+//                       <ProgressCircle.Circle>
+//                         <ProgressCircle.Track />
+//                         <ProgressCircle.Range strokeLinecap="round" />
+//                       </ProgressCircle.Circle>
+//                       <AbsoluteCenter>
+//                         <ProgressCircle.ValueText />
+//                       </AbsoluteCenter>
+//                     </ProgressCircle.Root>
+//                   </VStack>
+//                   <VStack align="stretch">
+//                     <Text>Year</Text>
+//                     <ProgressCircle.Root size={"xl"} key={"xl"} value={35} colorPalette={"green"}>
+//                       <ProgressCircle.Circle>
+//                         <ProgressCircle.Track />
+//                         <ProgressCircle.Range strokeLinecap="round" />
+//                       </ProgressCircle.Circle>
+//                       <AbsoluteCenter>
+//                         <ProgressCircle.ValueText />
+//                       </AbsoluteCenter>
+//                     </ProgressCircle.Root>
+//                   </VStack>
+//                 </HStack>
+//               </GridItem>
+//             </SimpleGrid>
+//           </Box>
+//         </GridItem>
+//       </SimpleGrid>
+//     </Container>
+//   );
+// }
